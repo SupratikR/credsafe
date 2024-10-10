@@ -1,5 +1,5 @@
 const {initializeApp} = require('firebase/app');
-const {getFirestore, collection, addDoc, getDocs} = require('firebase/firestore');
+const {getFirestore, doc, collection, addDoc, getDocs, updateDoc} = require('firebase/firestore');
 const crypto = require('crypto');
 const {app, BrowserWindow, ipcMain, Menu} = require('electron');
 const path = require('path');
@@ -89,7 +89,7 @@ ipcMain.on('credential:fetch:list', async (event, args) => {
 });
 
 // Listen for request to save credential
-ipcMain.on('credential:save', async (event, {title, website, username, password, options, recovery_keys}) => {
+ipcMain.on('credential:save', async (event, {id, title, website, username, password, options, recovery_keys}) => {
     try {
         const keystore = fs.readFileSync(path.join(process.cwd(), '.keystore'), {encoding: 'utf8'}); // Use a secure key management approach in production
 
@@ -111,8 +111,16 @@ ipcMain.on('credential:save', async (event, {title, website, username, password,
             createdAt: moment().format('YYYY-MM-DD')
         }
 
-        await addDoc(collection(db, "credentials"), dbEntry);
-        event.reply('credential:save:done', {success: true});
+        if(id) {
+            let credRef = doc(db, 'credentials', id);
+            await updateDoc(credRef, dbEntry);
+            event.reply('credential:save:done', {success: true, updated: true});
+        } else {
+            await addDoc(collection(db, "credentials"), dbEntry);
+            event.reply('credential:save:done', {success: true, updated: false});
+        }
+
+
     } catch (error) {
         console.error("Error saving password: ", error);
         event.reply('credential:save:done', {success: false, error});
@@ -120,9 +128,10 @@ ipcMain.on('credential:save', async (event, {title, website, username, password,
 });
 
 // Listen for request to generate secure random password
-ipcMain.on('password:generate', (event, options) => {
+ipcMain.on('password:generate', (event, args) => {
 
-    const {length, includeNumbers, includeSymbols} = options;
+    const isUpdate = args.isUpdate;
+    const {length, includeNumbers, includeSymbols} = args.options;
     const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ" +
         (includeNumbers ? "0123456789" : "") +
         (includeSymbols ? "!@#$%^&*()" : "");
@@ -133,7 +142,7 @@ ipcMain.on('password:generate', (event, options) => {
         password += charset[randomIndex];
     }
 
-    event.reply('password:generate:done', ({password}))
+    event.reply('password:generate:done', ({isUpdate, password}))
     // mainWindow.webContents.send('password:generate:done', ({password}));
 });
 
@@ -151,6 +160,10 @@ ipcMain.on('show:credential:details', (event, args) => {
     // open detail window
     createDetailWindow({...args, credential});
 });
+
+ipcMain.on('close:detail:windows', (event, args) => {
+    detailWindow.close();
+})
 
 // Application lifecycle events
 app.whenReady().then(createMainWindow);

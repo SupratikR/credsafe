@@ -32,7 +32,7 @@ document.getElementById('generate-btn').addEventListener('click', () => {
         includeSymbols: document.getElementById('include-symbols').checked,
     };
 
-    window.ipcRenderer.send('password:generate', options);
+    window.ipcRenderer.send('password:generate', {isUpdate: false, options});
 
 });
 
@@ -79,15 +79,18 @@ window.ipcRenderer.on('credential:fetch:list:done', (event, args) => {
 });
 
 window.ipcRenderer.on('password:generate:done', (event, args) => {
-    let password = document.getElementById('password');
-    password.value = args.password; // Set generated password in input field
-    password.focus(); // Focus on the input field
-    M.updateTextFields(); // Update Materialize CSS labels
+    if(!args.isUpdate) {
+        let password = document.getElementById('password');
+        password.value = args.password; // Set generated password in input field
+        password.focus(); // Focus on the input field
+        M.updateTextFields(); // Update Materialize CSS labels
+    }
+
 });
 
 window.ipcRenderer.on('credential:save:done', (event, args) => {
-    console.log(args);
-    if (args.success) {
+
+    if (args.success && !args.updated) {
         M.toast({html: 'Password saved successfully!'});
         document.getElementById('password-form').reset();
         window.ipcRenderer.send('credential:fetch:list');
