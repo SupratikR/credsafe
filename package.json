@@ -1,0 +1,44 @@
+{
+  "name": "credsafe",
+  "version": "1.0.0",
+  "description": "A desktop application to manage and organize your credentials",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "build": "electron-builder"
+  },
+  "build": {
+    "appId": "com.supratikr.credsafe",
+    "productName": "CredSafe",
+    "files": [
+      "**/*"
+    ],
+    "win": {
+      "icon": "icon.ico",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ]
+    }
+  },
+  "author": "Supratik Roy",
+  "license": "MIT",
+  "dependencies": {
+    "@fontsource/kanit": "^5.1.0",
+    "crypto-js": "^4.2.0",
+    "dotenv": "^16.4.5",
+    "firebase": "^10.14.0",
+    "material-icons": "^1.13.12",
+    "materialize-css": "^1.0.0-rc.2",
+    "moment": "^2.30.1",
+    "uuid": "^10.0.0"
+  },
+  "devDependencies": {
+    "electron": "^32.1.2",
+    "electron-builder": "^25.1.7"
+  }
+}

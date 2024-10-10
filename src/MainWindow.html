@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>CredSafe</title>
+    <link rel="stylesheet" href="../node_modules/materialize-css/dist/css/materialize.css">
+    <link rel="stylesheet" href="../node_modules/material-icons/iconfont/material-icons.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <script src="../node_modules/materialize-css/dist/js/materialize.js" defer></script>
+
+</head>
+<body class="grey darken-4 white-text">
+<div class="full-height">
+    <div class="row valign-wrapper" style="height: 100%">
+        <div class="col s4">
+            <div class="card grey darken-4">
+                <div class="card-content">
+                    <span class="card-title">Credentials</span>
+                    <ul class="collection grey darken-4" id="credential-list">
+
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+        <div class="col s8">
+            <form id="password-form">
+                <div class="card grey darken-4">
+                    <div class="card-content">
+                        <span class="card-title">Entry Form</span>
+                        <div class="row">
+                            <div class="input-field col s6">
+                                <input id="title" type="text" />
+                                <label for="title" class="white-text">Save As</label>
+                            </div>
+
+                            <div class="input-field col s6">
+                                <input id="website" type="text" />
+                                <label for="website" class="white-text">Website</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <input id="username" type="text" />
+                                <label for="username" class="white-text">Email/Username</label>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <textarea id="recovery_keys" class="materialize-textarea"></textarea>
+                                <label for="recovery_keys" class="white-text">Recovery Keys</label>
+                                <span class="helper-text white-text">Paste any recovery keys if applicable.</span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="input-field col s11">
+                                <input id="password" type="text" />
+                                <label for="password" class="white-text">Password</label>
+                            </div>
+                            <div class="input-field col s1 center-align">
+                                <button class="btn-small btn-floating waves-effect grey darken-4 modal-trigger" data-target="options-modal">
+                                    <i class="material-icons">settings</i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-action">
+                        <button class="btn-large waves-effect waves-light red" name="action">
+                            <i class="material-icons">history</i>
+                        </button>
+
+                        <button class="btn-large waves-effect waves-light teal darken-4" type="submit" name="action">
+                            <i class="material-icons">save</i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+
+        </div>
+    </div>
+
+    <div id="options-modal" class="modal">
+        <div class="modal-content grey darken-4 white-text">
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="number" id="length" min="0" max="100" value="12" class="white-text" />
+                    <label for="length">Length</label>
+                    <span class="helper-text white-text">Default length is 12</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col s6">
+                    <label>
+                        <input type="checkbox" id="include-numbers" checked />
+                        <span>Include Numbers</span>
+                    </label>
+                </div>
+
+                <div class="col s6">
+                    <label>
+                        <input type="checkbox" id="include-symbols" checked />
+                        <span>Include Symbols (!@#$%^&*())</span>
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer grey darken-4">
+            <button class="btn waves-effect waves-light teal darken-4 modal-close" id="generate-btn" name="action">Generate
+                <i class="material-icons right">build</i>
+            </button>
+        </div>
+    </div>
+
+</div>
+
+<script src="./js/renderer.js"></script>
+
+</body>
+</html>
