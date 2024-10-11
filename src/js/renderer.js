@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let elems = document.querySelectorAll('.modal');
-    let instances = M.Modal.init(elems);
+    M.AutoInit();
 
     window.ipcRenderer.send('credential:fetch:list');
 });
@@ -37,15 +36,12 @@ document.getElementById('generate-btn').addEventListener('click', () => {
 });
 
 window.ipcRenderer.on('credential:fetch:list:done', (event, args) => {
+    console.log('refresh list')
     const credentialList = document.getElementById('credential-list');
     credentialList.innerHTML = '' // clearing the existing list
 
     for(let el of args) {
-        // <span class="title">Title</span>
-        // <p>First Line <br>
-        //     Second Line
-        // </p>
-        // <a href="#!" class="secondary-content"><i class="material-icons">grade</i></a>
+
         const li = document.createElement('li');
         const span = document.createElement('span');
         const p = document.createElement('p');

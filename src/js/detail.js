@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    let elems = document.querySelectorAll('.modal');
-    let instances = M.Modal.init(elems);
+    M.AutoInit();
 });
 
 window.ipcRenderer.on('credential:display', (event, args) => {
@@ -85,7 +84,7 @@ window.ipcRenderer.on('credential:save:done', (event, args) => {
 
     if (args.success && args.updated) {
         M.toast({html: 'Password updated successfully!'});
-        document.getElementById('saved-password-form').reset();
+        // document.getElementById('saved-password-form').reset();
         // window.ipcRenderer.send('close:detail:windows');
         window.ipcRenderer.send('credential:fetch:list');
     } else {

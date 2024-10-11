@@ -15,7 +15,7 @@
         <div class="col s4">
             <div class="card grey darken-4">
                 <div class="card-content">
-                    <span class="card-title">Credentials</span>
+                    <span class="card-title">Stored Credentials</span>
                     <ul class="collection grey darken-4" id="credential-list">
 
                     </ul>
@@ -27,7 +27,7 @@
             <form id="password-form">
                 <div class="card grey darken-4">
                     <div class="card-content">
-                        <span class="card-title">Entry Form</span>
+                        <span class="card-title">Add New Credential</span>
                         <div class="row">
                             <div class="input-field col s6">
                                 <input id="title" type="text" />
@@ -61,18 +61,18 @@
                                 <label for="password" class="white-text">Password</label>
                             </div>
                             <div class="input-field col s1 center-align">
-                                <button class="btn-small btn-floating waves-effect grey darken-4 modal-trigger" data-target="options-modal">
+                                <button class="btn-small btn-floating waves-effect grey darken-4 modal-trigger tooltipped" data-target="options-modal" data-position="top" data-tooltip="Open password settings">
                                     <i class="material-icons">settings</i>
                                 </button>
                             </div>
                         </div>
                     </div>
                     <div class="card-action">
-                        <button class="btn-large waves-effect waves-light red" name="action">
+                        <button class="btn-large waves-effect waves-light red tooltipped" name="action" data-position="top" data-tooltip="Reset form">
                             <i class="material-icons">history</i>
                         </button>
 
-                        <button class="btn-large waves-effect waves-light teal darken-4" type="submit" name="action">
+                        <button class="btn-large waves-effect waves-light teal darken-4 tooltipped" type="submit" name="action" data-position="top" data-tooltip="Save new credential">
                             <i class="material-icons">save</i>
                         </button>
                     </div>
@@ -108,8 +108,8 @@
             </div>
         </div>
         <div class="modal-footer grey darken-4">
-            <button class="btn waves-effect waves-light teal darken-4 modal-close" id="generate-btn" name="action">Generate
-                <i class="material-icons right">build</i>
+            <button class="btn waves-effect waves-light teal darken-4 modal-close" id="generate-btn" name="action">
+                <i class="material-icons">build</i>
             </button>
         </div>
     </div>

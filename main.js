@@ -85,7 +85,8 @@ ipcMain.on('credential:fetch:list', async (event, args) => {
         data.push({id: doc.id, ...doc.data()}); // Add document ID and data to the array
     });
 
-    event.reply('credential:fetch:list:done', data);
+    // event.reply('credential:fetch:list:done', data);
+    mainWindow.webContents.send('credential:fetch:list:done', data);
 });
 
 // Listen for request to save credential
@@ -108,7 +109,7 @@ ipcMain.on('credential:save', async (event, {id, title, website, username, passw
             appId,
             title,
             credential: encrypted,
-            createdAt: moment().format('YYYY-MM-DD')
+            // createdAt: moment().format('YYYY-MM-DD')
         }
 
         if(id) {
@@ -116,6 +117,7 @@ ipcMain.on('credential:save', async (event, {id, title, website, username, passw
             await updateDoc(credRef, dbEntry);
             event.reply('credential:save:done', {success: true, updated: true});
         } else {
+            dbEntry = {...dbEntry, createdAt: moment().format('YYYY-MM-DD') };
             await addDoc(collection(db, "credentials"), dbEntry);
             event.reply('credential:save:done', {success: true, updated: false});
         }
