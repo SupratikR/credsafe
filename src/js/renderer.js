@@ -36,11 +36,15 @@ document.getElementById('generate-btn').addEventListener('click', () => {
 });
 
 window.ipcRenderer.on('credential:fetch:list:done', (event, args) => {
-    console.log('refresh list')
+
     const credentialList = document.getElementById('credential-list');
     credentialList.innerHTML = '' // clearing the existing list
 
     for(let el of args) {
+
+        const image = document.createElement('img');
+        image.setAttribute('src', './images/icons8-laptop-password-bubbles-96.png')
+        image.setAttribute('class', 'circle');
 
         const li = document.createElement('li');
         const span = document.createElement('span');
@@ -66,7 +70,7 @@ window.ipcRenderer.on('credential:fetch:list:done', (event, args) => {
 
         a.appendChild(i2);
 
-        li.append(span, p, a);
+        li.append(image, span, p, a);
 
         credentialList.appendChild(li);
     }

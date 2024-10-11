@@ -52,6 +52,7 @@ function createMainWindow() {
             enableRemoteModule: false,
             nodeIntegration: true
         },
+        icon: path.join(process.cwd(), 'icons/icons8-laptop-password-bubbles-384.png')
     });
 
     mainWindow.loadFile('./src/MainWindow.html');
@@ -68,6 +69,7 @@ function createDetailWindow(credential) {
             enableRemoteModule: false,
             nodeIntegration: true
         },
+        icon: path.join(process.cwd(), 'icons/icons8-laptop-password-bubbles-384.png')
     });
 
     detailWindow.loadFile('./src/DetailWindow.html');
