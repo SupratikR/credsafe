@@ -11,10 +11,22 @@
     "appId": "com.supratikr.credsafe",
     "productName": "CredSafe",
     "files": [
-      "**/*"
+      {
+        "from": "build/",
+        "to": "."
+      },
+      {
+        "from": ".",
+        "filter": [
+          "**/*"
+        ]
+      }
+    ],
+    "extraFiles": [
+      "build/**/*"
     ],
     "win": {
-      "icon": "icons/icons8-laptop-password-bubbles-384.png",
+      "icon": "build/icons/icons8-laptop-password-bubbles-384.png",
       "target": [
         {
           "target": "nsis",

@@ -1,5 +1,13 @@
 const {initializeApp} = require('firebase/app');
-const {getFirestore, doc, collection, addDoc, getDocs, updateDoc} = require('firebase/firestore');
+const {getFirestore,
+    query,
+    doc,
+    collection,
+    addDoc,
+    getDocs,
+    updateDoc,
+    orderBy
+} = require('firebase/firestore');
 const crypto = require('crypto');
 const {app, BrowserWindow, ipcMain, Menu} = require('electron');
 const path = require('path');
@@ -52,10 +60,10 @@ function createMainWindow() {
             enableRemoteModule: false,
             nodeIntegration: true
         },
-        icon: path.join(process.cwd(), 'icons/icons8-laptop-password-bubbles-384.png')
+        icon: path.join(process.cwd(), 'build/icons/icons8-laptop-password-bubbles-384.png')
     });
 
-    mainWindow.loadFile('./src/MainWindow.html');
+    mainWindow.loadFile('./build/MainWindow.html');
 }
 
 // Function to create the detail window
@@ -69,10 +77,10 @@ function createDetailWindow(credential) {
             enableRemoteModule: false,
             nodeIntegration: true
         },
-        icon: path.join(process.cwd(), 'icons/icons8-laptop-password-bubbles-384.png')
+        icon: path.join(process.cwd(), 'build/icons/icons8-laptop-password-bubbles-384.png')
     });
 
-    detailWindow.loadFile('./src/DetailWindow.html');
+    detailWindow.loadFile('./build/DetailWindow.html');
 
     detailWindow.webContents.on('did-finish-load', () => {
         detailWindow.webContents.send('credential:display', credential);
@@ -81,7 +89,7 @@ function createDetailWindow(credential) {
 
 // Listen for credential load request
 ipcMain.on('credential:fetch:list', async (event, args) => {
-    const querySnapshot = await getDocs(collection(db, "credentials"));
+    const querySnapshot = await getDocs(query(collection(db, "credentials"), orderBy('createdAt', 'desc')));
     const data = [];
     querySnapshot.forEach((doc) => {
         data.push({id: doc.id, ...doc.data()}); // Add document ID and data to the array
